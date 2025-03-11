@@ -7,11 +7,23 @@ const Navbar = ({ cartCount, toggleTheme, darkTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+  const closeMenu = () => setIsMenuOpen(false);
+  useEffect(() => {
+    const handleRouteChange = () => {
+      closeMenu();
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-  }, []);
+  }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -78,18 +90,18 @@ const Navbar = ({ cartCount, toggleTheme, darkTheme }) => {
 
         {isMenuOpen && (
           <div className="md:hidden pb-4 space-y-3">
-            <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Home</Link>
-            <Link href="/orders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
-            <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Dashboard</Link>
-            <Link href="/cart" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Cart ({cartCount})</Link>
-            <Link href="/orders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
-            <button onClick={toggleTheme} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Link href="/" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Home</Link>
+            <Link href="/orders" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
+            <Link href="/dashboard" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Dashboard</Link>
+            <Link href="/cart" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Cart ({cartCount})</Link>
+            <Link href="/orders" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
+            <Link href={window.location.href} onClick={closeMenu}><button onClick={toggleTheme} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
               {darkTheme ? 'Light Theme' : 'Dark Theme'}
-            </button>
+            </button></Link>
             {isLoggedIn ? (
-              <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Logout</button>
+              <Link href={'/'} onClick={closeMenu}><button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Logout</button></Link>
             ) : (
-              <Link href="/login" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Login</Link>
+              <Link href="/login" onClick={closeMenu} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Login</Link>
             )}
           </div>
         )}
