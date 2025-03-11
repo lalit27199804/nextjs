@@ -50,7 +50,7 @@ const Products = ({ addToCart, darkTheme }) => {
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Men's Watches
+              Men&apos;s Watches
             </button>
             <button
               onClick={() => setSelectedCategory('women')}
@@ -62,7 +62,7 @@ const Products = ({ addToCart, darkTheme }) => {
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Women's Watches
+              Women&apos;s Watches
             </button>
           </div>
         </div>
