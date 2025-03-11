@@ -21,7 +21,7 @@ const Navbar = ({ cartCount, toggleTheme, darkTheme }) => {
   };
 
   return (
-    <nav className={`${darkTheme ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} shadow-lg`}>
+    <nav className={`${darkTheme ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} shadow-lg sticky top-0 z-50`}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
         <Link href="/" className="text-3xl font-bold flex items-center">
@@ -52,6 +52,8 @@ const Navbar = ({ cartCount, toggleTheme, darkTheme }) => {
 </Link>
           
           <div className="hidden md:flex items-center space-x-8">
+          <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Home</Link>
+          <Link href="/orders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
             <Link href="/dashboard" className="hover:text-blue-500">Dashboard</Link>
             <Link href="/cart" className="flex items-center hover:text-blue-500">
               <FiShoppingCart className="mr-1" /> Cart ({cartCount})
@@ -75,10 +77,12 @@ const Navbar = ({ cartCount, toggleTheme, darkTheme }) => {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden pb-4 space-y-4">
+          <div className="md:hidden pb-4 space-y-3">
             <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Home</Link>
+            <Link href="/orders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
             <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Dashboard</Link>
             <Link href="/cart" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Cart ({cartCount})</Link>
+            <Link href="/orders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Orders</Link>
             <button onClick={toggleTheme} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
               {darkTheme ? 'Light Theme' : 'Dark Theme'}
             </button>

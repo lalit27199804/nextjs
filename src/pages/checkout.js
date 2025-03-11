@@ -11,12 +11,34 @@ const CheckoutPage = ({ cart, setCart, darkTheme }) => {
     paymentMethod: 'credit-card'
   });
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // In a real app, you would send this data to your backend
+  //   console.log('Order details:', { ...formData, cart });
+  //   localStorage.removeItem('cart');
+  //   setCart([]);
+  //   router.push('/order-confirmation');
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real app, you would send this data to your backend
-    console.log('Order details:', { ...formData, cart });
+    
+    const newOrder = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      customer: formData,
+      products: cart,
+      total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+      status: 'Processing'
+    };
+  
+    // Save to localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    localStorage.setItem('orders', JSON.stringify([...existingOrders, newOrder]));
+    
+    // Clear cart
     localStorage.removeItem('cart');
     setCart([]);
+    
     router.push('/order-confirmation');
   };
 

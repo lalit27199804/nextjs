@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import ProductCard from '../../components/ProductCard';
+import watchData from '../../data/data'
 
 const Products = ({ addToCart, darkTheme }) => {
   const [watches, setWatches] = useState([]);
@@ -8,8 +9,9 @@ const Products = ({ addToCart, darkTheme }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
-      const data = await res.json();
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
+      // const data = await res.json();
+      const data = watchData
       setWatches(data.watches);
     };
     fetchData();

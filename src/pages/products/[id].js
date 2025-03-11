@@ -2,8 +2,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import watchData from '../../data/data'
 
-const ProductDetail = ({ addToCart }) => {
+const ProductDetail = ({ addToCart, darkTheme }) => {
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState(null);
@@ -11,8 +12,9 @@ const ProductDetail = ({ addToCart }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
-      const data = await res.json();
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
+      // const data = await res.json();
+      const data = watchData
       const foundProduct = data.watches.find(w => w.id === parseInt(id));
       setProduct(foundProduct);
     };
@@ -26,11 +28,11 @@ const ProductDetail = ({ addToCart }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className={`min-h-screen bg-gray-50 ${darkTheme ? 'bg-gray-900 text-white' : 'bg-gray-50'} py-12`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Link href='/products'>
         <button
-          className="mb-8 flex items-center text-gray-600 hover:text-gray-900"
+          className={`mb-8 flex items-center text-gray-600 ${darkTheme ? 'bg-gray-900 text-white' : 'bg-gray-50'} hover:text-gray-900`}
         >
           
           <svg 
@@ -50,7 +52,7 @@ const ProductDetail = ({ addToCart }) => {
          
         </button> </Link>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8 ${darkTheme ? 'bg-gray-900' : 'bg-gray-50'}">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Product Image */}
             <div className="relative group">
